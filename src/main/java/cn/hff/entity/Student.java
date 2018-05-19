@@ -20,9 +20,9 @@ public class Student {
     private Integer id;
 
     /**
-     * 姓名
+     * 姓名，好像碰到了特别长的名字，估计不是汉族人
      */
-    @Column(length = 16)
+    @Column(length = 32)
     private String name;
 
     /**

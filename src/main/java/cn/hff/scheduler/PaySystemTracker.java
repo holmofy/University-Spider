@@ -29,7 +29,11 @@ public class PaySystemTracker {
         for (int i = 1; i <= count; i++) {
             String stuNum = studentInfoDao.findById(i).get().getStuNum();
             Student student = paySystem.getStudentInfo(stuNum);
-            studentDao.save(student);
+            // 获取成功就可以退出账号，方便下个账号登陆
+            paySystem.logout();
+            if (student != null) {
+                studentDao.save(student);
+            }
         }
     }
 }
