@@ -25,4 +25,8 @@ public class JxauEduManageSystemTrackerTest {
         tracker.track();
     }
 
+    @Test
+    public void distinct() {
+        tracker.distinctStuNum();
+    }
 }

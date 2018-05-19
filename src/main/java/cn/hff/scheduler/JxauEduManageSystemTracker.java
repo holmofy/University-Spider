@@ -13,6 +13,7 @@ import cn.hff.entity.JxauStudentInfo;
 import cn.hff.school.jxau.EduManageSystem;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -58,4 +59,16 @@ public class JxauEduManageSystemTracker {
             }));
         });
     }
+
+    public void distinctStuNum() {
+        List<String> stuNums = studentInfoDao.findDistinctStuNum();
+        if (!CollectionUtils.isEmpty(stuNums)) {
+            stuNums.forEach(num -> {
+                JxauStudentInfo stu = studentInfoDao.getFirstByStuNum(num);
+                Integer id = stu.getId();
+                studentInfoDao.deleteByStuNumEqualsAndIdNotEquals(num, id);
+            });
+        }
+    }
+
 }

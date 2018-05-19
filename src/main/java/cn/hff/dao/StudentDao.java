@@ -12,4 +12,6 @@ public interface StudentDao extends JpaRepository<Student, Integer> {
 
     Student findByStuNumber(String stuNumber);
 
+    int countByStuNumber(String stuNumber);
+
 }

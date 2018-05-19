@@ -100,13 +100,13 @@ public class CommonPaySystem {
      */
     public Student getStudentInfo(String stuNum) {
         // 登录失败重试
-        int retryCount = 0;
-        while (!login(stuNum) && retryCount < LOGIN_RETRY_COUNT) {
-            retryCount++;
+        int tryCount = 1;
+        while (!login(stuNum) && tryCount < LOGIN_RETRY_COUNT) {
+            tryCount++;
         }
-        log.warn("尝试登陆" + retryCount + "次");
-        if (retryCount >= LOGIN_RETRY_COUNT) {
-            log.warn("尝试多次失败，停止尝试");
+        log.warn("尝试登陆" + tryCount + "次");
+        if (tryCount >= LOGIN_RETRY_COUNT) {
+            log.warn("尝试多次失败，停止尝试，学号为：" + stuNum);
             return null;
         }
         // 登录成功后尝试获取学生信息
@@ -156,13 +156,13 @@ public class CommonPaySystem {
     private boolean login(String stuNum) {
         String url = baseUrl + "/Login.aspx";
         String checkCode = null;
-        int retry = 0;
+        int tryCount = 1;
         while (checkCode == null || checkCode.length() != 4) {
             // 验证码长度为4，如果不为4，那肯定是识别失败
             checkCode = getCheckCode();
-            retry++;
+            tryCount++;
         }
-        log.info("尝试识别验证码" + retry + "次");
+        log.info("尝试识别验证码" + tryCount + "次");
         // 网站用ASP.NET写的，隐藏表单与中的_VIEWSTATE仍需要传回去
         String params = "__VIEWSTATE=%2FwEPDwULLTE5MTY2NjQxMzQPZBYCZg9kFgQCAQ8WAh4JaW5uZXJodG1sBfQBPGxpPjxhIGNsYXNzPSIiIGhyZWY9ImphdmFzY3JpcHQ6T3BlblB1YignMycpIj7igKLlhbPkuo7nvZHkuIrmlK%2Fku5jml7bpl7TosIPmlbQ8L2E%2BPC9saT48bGk%2BPGEgY2xhc3M9IiIgaHJlZj0iamF2YXNjcmlwdDpPcGVuUHViKCc0JykiPuKAoue8tOi0ueaMh%2BWNlzwvYT48L2xpPjxsaT48YSBjbGFzcz0iIiBocmVmPSJqYXZhc2NyaXB0Ok9wZW5QdWIoJzExJykiPuKAoue9keS4iuaUr%2BS7mOmineW6puivtOaYjjwvYT48L2xpPmQCCw8WAh4HVmlzaWJsZWhkZN1hW9h1jgAKOrAMO6eHdz91lJCgwrUvN5Vz3%2BCUNqCC&__EVENTVALIDATION=%2FwEWBQLEzv6XAgKEwbvHBgKrrsjjCQKcoazCDgKdrZyeBUXbvvCRzmvNcB8PvLXWJnfZnjCaOqfGDeU6VMq8Xrrx" +
                 "&txtAdminName=" +
