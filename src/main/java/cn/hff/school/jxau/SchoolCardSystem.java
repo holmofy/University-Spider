@@ -12,6 +12,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -70,6 +71,7 @@ public class SchoolCardSystem {
                 .build();
         try {
             HttpResponse response = client.execute(request);
+            EntityUtils.consume(response.getEntity());
             // 登录成功重定向到/SelfSearch/Index.aspx页面
             return response.getStatusLine().getStatusCode() == HttpStatus.SC_MOVED_TEMPORARILY;
         } catch (IOException e) {

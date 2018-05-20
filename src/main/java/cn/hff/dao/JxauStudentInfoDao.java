@@ -23,4 +23,9 @@ public interface JxauStudentInfoDao extends JpaRepository<JxauStudentInfo, Integ
     @Query(value = "delete from tb_jxau_student where stu_num = ? and id != ?", nativeQuery = true)
     void deleteByStuNumEqualsAndIdNotEquals(String stuNum, int id);
 
+    @Query(value = "select * from tb_jxau_student where stu_num like ? and `status` != \"未报到\"", nativeQuery = true)
+    List<JxauStudentInfo> findByStuNumLike(String stuNum);
+
+    @Query(value = "select * from tb_jxau_student where `status` != ?", nativeQuery = true)
+    List<JxauStudentInfo> findByStatusNotEquals(String status);
 }

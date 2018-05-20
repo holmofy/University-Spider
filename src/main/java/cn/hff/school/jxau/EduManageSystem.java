@@ -166,6 +166,7 @@ public class EduManageSystem {
         try {
             HttpResponse response = client.execute(request);
             if (HttpStatus.SC_MOVED_TEMPORARILY == response.getStatusLine().getStatusCode()) {
+                EntityUtils.consume(response.getEntity());
                 // 重定向地址中会包含一个UUID
                 // /Main/Index/41d47c73-c764-4312-ad3f-3fc95d880ba5
                 Header header = response.getHeaders("Location")[0];
