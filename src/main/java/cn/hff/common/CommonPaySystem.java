@@ -3,6 +3,7 @@ package cn.hff.common;
 import cn.hff.entity.Gender;
 import cn.hff.entity.Student;
 import cn.hff.http.Headers;
+import cn.hff.util.DateUtils;
 import cn.hff.util.ImageUtils;
 import lombok.AllArgsConstructor;
 import net.sourceforge.tess4j.TesseractException;
@@ -26,9 +27,7 @@ import org.springframework.util.StringUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 /**
  * 校园网上统一支付平台
@@ -127,14 +126,10 @@ public class CommonPaySystem {
                 student.setStartYear(document.getElementById("labInShoolYear").text().trim());
                 String birthday = document.getElementById("labBri").text().trim();
                 if (!StringUtils.isEmpty(birthday)) {
-                    try {
-                        if (birthday.length() == pattern.length()) {
-                            student.setBirthday(LocalDate.parse(birthday, formatter));
-                        } else {
-                            student.setBirthday(LocalDate.parse(birthday));
-                        }
-                    } catch (DateTimeParseException e) {
-                        log.warn("时间解析异常", e);
+                    if (birthday.length() == pattern.length()) {
+                        student.setBirthday(DateUtils.parseDate(birthday, formatter));
+                    } else {
+                        student.setBirthday(DateUtils.parseDate(birthday));
                     }
                 }
                 student.setStudentClass(document.getElementById("labClass").text().trim());

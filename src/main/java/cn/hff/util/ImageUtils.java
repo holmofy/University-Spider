@@ -16,17 +16,13 @@ import java.io.InputStream;
  */
 public class ImageUtils {
 
-    /**
-     * 懒加载
-     */
-    private static class TesseractHolder {
-        static ITesseract INSTANCE = new Tesseract();
 
-        static {
-            // 配置自己的训练数据
-            INSTANCE.setDatapath("D:\\Java\\JavaProject\\UniversityTrack\\tessdata");
-            INSTANCE.setLanguage("myeng");
-        }
+    private static ITesseract TESSERACT = new Tesseract();
+
+    static {
+        // 配置自己的训练数据
+        TESSERACT.setDatapath("D:\\Java\\JavaProject\\UniversityTrack\\training\\tessdata");
+        TESSERACT.setLanguage("myeng");
     }
 
     /**
@@ -77,6 +73,6 @@ public class ImageUtils {
      */
     public static String recognition(BufferedImage srcImage) throws TesseractException, IOException {
         BufferedImage reducedImage = binaryImage(grayImage(clipImage(srcImage)));
-        return TesseractHolder.INSTANCE.doOCR(reducedImage).trim();
+        return TESSERACT.doOCR(reducedImage).trim();
     }
 }

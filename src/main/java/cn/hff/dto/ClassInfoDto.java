@@ -1,15 +1,18 @@
 package cn.hff.dto;
 
 import cn.hff.entity.JxauClassInfo;
+import cn.hff.util.DateUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.springframework.util.StringUtils;
 
-import java.time.LocalDate;
 import java.util.List;
 
 /**
+ * <pre>
  * POST http://jwgl.jxau.edu.cn/XueJiManage/XueJiManage/ClassList/655887b7-a988-49f2-8a31-e5e338a6d15a
  * nodeid=11010100&start=0&limit=30
+ * </pre>
+ * GsonFormatter生成
+ * <p>
  * Created by Holmofy on 2018/5/13.
  */
 public class ClassInfoDto {
@@ -383,10 +386,7 @@ public class ClassInfoDto {
             classInfo.setStuCount(getRenShu());
             classInfo.setTeacherName(getTeacherName());
             classInfo.setGirlCount(getNv());
-            String startTime = getRxsj();
-            if (!StringUtils.isEmpty(startTime)) {
-                classInfo.setStartTime(LocalDate.parse(startTime));
-            }
+            classInfo.setStartTime(DateUtils.parseDate(getRxsj()));
             classInfo.setTeacherCode(getTeacherId());
             return classInfo;
         }

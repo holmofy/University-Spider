@@ -1,6 +1,8 @@
 package cn.hff.dto;
 
 /**
+ * GsonFormatter生成
+ * <p>
  * Created by Holmofy on 2018/5/13.
  */
 public class TreeNodeDto {

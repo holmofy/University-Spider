@@ -2,15 +2,14 @@ package cn.hff.dto;
 
 import cn.hff.entity.Gender;
 import cn.hff.entity.JxauStudentInfo;
+import cn.hff.util.DateUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.util.StringUtils;
 
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.time.format.DateTimeParseException;
 import java.time.format.SignStyle;
 import java.util.List;
 
@@ -21,6 +20,8 @@ import static java.time.temporal.ChronoField.*;
  * POST http://jwgl.jxau.edu.cn/XueJiManage/XueJiManage/GetXueJiList/655887b7-a988-49f2-8a31-e5e338a6d15a
  * bjdm=11060400201401&start=0&limit=100&sort=Xjzt&dir=ASC
  * </pre>
+ * GsonFormatter生成
+ * <p>
  * Created by Holmofy on 2018/5/13.
  */
 public class StuRecordListDto {
@@ -677,17 +678,13 @@ public class StuRecordListDto {
             JxauStudentInfo stuInfo = new JxauStudentInfo();
             String birth = getCsny();
             if (!StringUtils.isEmpty(birth)) {
-                try {
-                    if (birth.indexOf(' ') >= 0) {
-                        // 奇葩格式:02 23 1996
-                        // 04  4 1997
-                        birth = String.join("-", birth.split(" +"));
-                        stuInfo.setBirthday(LocalDate.parse(birth, formatterMDY));
-                    } else {
-                        stuInfo.setBirthday(LocalDate.parse(birth, formatterYMD));
-                    }
-                } catch (DateTimeParseException e) {
-                    log.warn("日期解析失败", e);
+                if (birth.indexOf(' ') >= 0) {
+                    // 奇葩格式:02 23 1996
+                    // 04  4 1997
+                    birth = String.join("-", birth.split(" +"));
+                    stuInfo.setBirthday(DateUtils.parseDate(birth, formatterMDY));
+                } else {
+                    stuInfo.setBirthday(DateUtils.parseDate(birth, formatterYMD));
                 }
             }
             stuInfo.setClassCode(getBjdm());
@@ -698,14 +695,7 @@ public class StuRecordListDto {
             stuInfo.setOrigin(getJg());
             stuInfo.setPoliticalStatus(getZzmm());
             stuInfo.setRegisterStatus(getZczt());
-            String startTime = getRxsj();
-            if (!StringUtils.isEmpty(startTime)) {
-                try {
-                    stuInfo.setStartTime(LocalDate.parse(startTime, formatterYMD));
-                } catch (DateTimeParseException e) {
-                    log.warn("日期解析异常", e);
-                }
-            }
+            stuInfo.setStartTime(DateUtils.parseDate(getRxsj(), formatterYMD));
             stuInfo.setStatus(getXjzt());
             stuInfo.setStuNum(getXh());
             return stuInfo;

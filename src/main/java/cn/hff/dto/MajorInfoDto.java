@@ -10,6 +10,8 @@ import java.util.List;
  * POST ttp://jwgl.jxau.edu.cn/XueJiManage/XueJiManage/GetProfessionalListPaging/2615ea45-8fcc-44b4-9940-83c4b32a8ead
  * Dwdm=1101&start=0&limit=30
  * </pre>
+ * GsonFormatter生成
+ * <p>
  * Created by Holmofy on 2018/5/14.
  */
 public class MajorInfoDto {
