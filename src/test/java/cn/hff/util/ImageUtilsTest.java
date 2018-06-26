@@ -19,4 +19,10 @@ public class ImageUtilsTest {
         String text = ImageUtils.recognition(ImageIO.read(new File("C:\\Users\\19383\\Desktop\\CheckCode.jpg")));
         System.out.println(text);
     }
+
+    @Test
+    public void testImageProcess() throws IOException {
+        ImageIO.write(ImageUtils.grayImage(ImageIO.read(new File("C:\\Users\\19383\\Desktop\\verifyCode.jpg"))),
+                "JPEG",new File("C:\\Users\\19383\\Desktop\\output.jpg"));
+    }
 }

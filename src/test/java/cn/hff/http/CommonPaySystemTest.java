@@ -1,7 +1,7 @@
 package cn.hff.http;
 
 import cn.hff.common.CommonPaySystem;
-import cn.hff.entity.Student;
+import cn.hff.entity.CommonPayStudent;
 import cn.hff.school.jxau.Constants;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class CommonPaySystemTest {
     @Test
     public void test() {
         CommonPaySystem paySystem = new CommonPaySystem(Constants.PAY_SYSTEM_SITE);
-        Student student = paySystem.getStudentInfo("20142529");
+        CommonPayStudent student = paySystem.getStudentInfo("20142529");
         System.out.println(student);
     }
 

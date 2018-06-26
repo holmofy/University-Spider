@@ -70,7 +70,7 @@ public class StudentCardInfo {
     /**
      * 部门：学生/本科生/计算机信息工程/网络工程/2014级/网络工程1401
      * <p>
-     * 和{@link Student#department}不一样
+     * 和{@link CommonPayStudent#department}不一样
      */
     @Column(length = 128)
     private String department;

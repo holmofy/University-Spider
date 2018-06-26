@@ -1,19 +1,22 @@
 package cn.hff.entity;
 
-import lombok.Data;
-
-import javax.persistence.*;
 import java.time.LocalDate;
 
+import javax.persistence.Column;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import lombok.Data;
+
 /**
- * 核心实体类
+ * 统一支付平台核心实体类
  * <p>
  * Created by Holmofy on 2018/5/9.
  */
 @Data
-@Entity
-@Table(name = "tb_student")
-public class Student {
+public class CommonPayStudent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

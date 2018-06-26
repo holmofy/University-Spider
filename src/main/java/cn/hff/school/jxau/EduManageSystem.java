@@ -1,14 +1,10 @@
 package cn.hff.school.jxau;
 
-import cn.hff.dto.ClassInfoDto;
-import cn.hff.dto.MajorInfoDto;
-import cn.hff.dto.StuRecordListDto;
-import cn.hff.dto.TreeNodeDto;
-import cn.hff.http.HttpUtils;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.type.CollectionType;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -18,10 +14,15 @@ import org.apache.http.client.methods.RequestBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
+
+import cn.hff.dto.ClassInfoDto;
+import cn.hff.dto.MajorInfoDto;
+import cn.hff.dto.StuRecordListDto;
+import cn.hff.dto.TreeNodeDto;
+import cn.hff.http.HttpUtils;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 教务管理系统
@@ -29,9 +30,8 @@ import java.util.List;
  * <p>
  * Created by Holmofy on 2018/5/13.
  */
+@Slf4j
 public class EduManageSystem {
-
-    private static final Log log = LogFactory.getLog(EduManageSystem.class);
 
     private static final HttpClient client = HttpClients.createDefault();
 

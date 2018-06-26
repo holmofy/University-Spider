@@ -1,7 +1,7 @@
 package cn.hff.school.jxau;
 
-import cn.hff.dao.StudentDao;
-import cn.hff.entity.Student;
+import cn.hff.dao.JxauPayStudentDao;
+import cn.hff.entity.CommonPayStudent;
 import cn.hff.http.Headers;
 import cn.hff.http.HttpUtils;
 import org.apache.commons.logging.Log;
@@ -37,14 +37,14 @@ public class SchoolCardSystem {
     private static final HttpClient client = HttpClients.createDefault();
 
     @Autowired
-    private StudentDao studentDao;
+    private JxauPayStudentDao studentDao;
 
     /**
      * 获取学生基本信息
      * <p>
      * http://210.35.128.134/SelfSearch/User/baseinfo.aspx
      */
-    public Student getBaseInfo() {
+    public CommonPayStudent getBaseInfo() {
         return null;
     }
 

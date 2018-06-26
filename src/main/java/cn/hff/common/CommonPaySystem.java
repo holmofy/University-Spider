@@ -1,12 +1,9 @@
 package cn.hff.common;
 
-import cn.hff.entity.Gender;
-import cn.hff.entity.Student;
-import cn.hff.http.Headers;
-import cn.hff.util.DateUtils;
-import cn.hff.util.ImageUtils;
-import lombok.AllArgsConstructor;
-import net.sourceforge.tess4j.TesseractException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.time.format.DateTimeFormatter;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.http.HttpEntity;
@@ -23,11 +20,16 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.time.format.DateTimeFormatter;
+import cn.hff.entity.CommonPayStudent;
+import cn.hff.entity.Gender;
+import cn.hff.http.Headers;
+import cn.hff.util.DateUtils;
+import cn.hff.util.ImageUtils;
+import lombok.AllArgsConstructor;
+import net.sourceforge.tess4j.TesseractException;
 
 /**
  * 校园网上统一支付平台
@@ -37,7 +39,7 @@ import java.time.format.DateTimeFormatter;
  * Created by Holmofy on 2018/5/9.
  */
 @AllArgsConstructor
-public class CommonPaySystem {
+public class CommonPaySystem<T extends CommonPayStudent> {
 
     private static final Log log = LogFactory.getLog(CommonPaySystem.class);
 
@@ -57,6 +59,8 @@ public class CommonPaySystem {
      * 网址域名
      */
     private String baseUrl;
+
+    private Class<T> clazz;
 
     /**
      * 获取验证码
@@ -97,7 +101,7 @@ public class CommonPaySystem {
      * @param stuNum 学号
      * @return 学生信息
      */
-    public Student getStudentInfo(String stuNum) {
+    public T getStudentInfo(String stuNum) {
         // 登录失败重试
         int tryCount = 1;
         while (!login(stuNum) && tryCount < LOGIN_RETRY_COUNT) {
@@ -116,7 +120,7 @@ public class CommonPaySystem {
         try {
             HttpResponse response = client.execute(request);
             if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
-                Student student = new Student();
+                T student = BeanUtils.instantiateClass(clazz);
                 Document document = Jsoup.parse(EntityUtils.toString(response.getEntity()));
                 student.setName(document.getElementById("labStudentName").text().trim());
                 student.setStuNumber(document.getElementById("labStudnetNo").text().trim());
