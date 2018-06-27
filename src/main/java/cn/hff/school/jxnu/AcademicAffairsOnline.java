@@ -61,7 +61,7 @@ public class AcademicAffairsOnline {
             studentInfo.setName(doc.getElementById("lblXM").text().trim());
             studentInfo.setClassName(doc.getElementById("lblBJ").text().trim());
             studentInfo.setCandidateNum(doc.getElementById("lblKSH").text().trim());
-            studentInfo.setGender(Gender.valueOf(doc.getElementById("lblXB").text().trim()));
+            studentInfo.setGender(Gender.fromText(doc.getElementById("lblXB").text().trim()));
             studentInfo.setEthnic(doc.getElementById("lblMZ").text().trim());
             studentInfo.setBirthday(DateUtils.parseDate(doc.getElementById("lblCSRQ").text().trim(), formatter));
             studentInfo.setIdCardNum(doc.getElementById("lblSFZH").text().trim());

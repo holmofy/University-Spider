@@ -21,7 +21,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -31,6 +34,9 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_jxnu_student")
 public class JxnuStudentInfo {
@@ -43,7 +49,7 @@ public class JxnuStudentInfo {
     /**
      * 学号
      */
-    @Column(name = "stu_num", length = 10)
+    @Column(name = "stu_num", length = 12)
     private String stuNum;
 
     /**
@@ -74,6 +80,12 @@ public class JxnuStudentInfo {
      */
     @Column(length = 10)
     private String ethnic;
+
+    /**
+     * 学院
+     */
+    @Column(length = 20)
+    private String department;
 
     /**
      * 班级

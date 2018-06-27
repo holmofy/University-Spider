@@ -7,6 +7,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 
 import lombok.Data;
 
@@ -16,6 +17,7 @@ import lombok.Data;
  * Created by Holmofy on 2018/5/9.
  */
 @Data
+@MappedSuperclass
 public class CommonPayStudent {
 
     @Id
