@@ -52,23 +52,26 @@ public class JxnuTracker {
         driver.getScreenshotAs(OutputType.FILE);
         driver.get("http://jwc.jxnu.edu.cn/User/default.aspx?&code=119&&uctl=MyControl\\all_searchstudent.ascx");
         driver.findElement(By.id("_ctl1_rbtType_1")).click();
-        WebElement college = driver.findElement(By.id("_ctl1_ddlCollege"));
-        WebElement clazz = driver.findElement(By.id("_ctl1_ddlClass"));
-        int collegeSize = college.findElements(By.tagName("option")).size();
-        int classSize = clazz.findElements(By.tagName("option")).size();
 
-        for (int i = 0; i < collegeSize; i++) {
-            // 注意，下一次循环页面已经刷新，需要重新findElement
-            college = driver.findElement(By.id("_ctl1_ddlCollege"));
-            Select collegeSelector = new Select(college);
+        WebElement college = driver.findElement(By.id("_ctl1_ddlCollege"));
+        Select collegeSelector = new Select(college);
+        for (int i = 0; i < collegeSelector.getOptions().size(); i++) {
             collegeSelector.selectByIndex(i);
-            for (int j = 0; j < classSize; j++) {
-                clazz = driver.findElement(By.id("_ctl1_ddlClass"));
-                Select classSelector = new Select(clazz);
+            // 选择了学院导致页面刷新，ASP.NET写的网站就是这么坑逼
+            // 每个学院的班级数可能不一样，要临时获取
+            WebElement clazz = driver.findElement(By.id("_ctl1_ddlClass"));
+            Select classSelector = new Select(clazz);
+            for (int j = 0; j < classSelector.getOptions().size(); j++) {
                 classSelector.selectByIndex(j);
                 driver.findElement(By.id("_ctl1_btnSearch")).click();
                 processTableResult();
+                // 刷新页面后重新加载DOM，需要重新查找
+                clazz = driver.findElement(By.id("_ctl1_ddlClass"));
+                classSelector = new Select(clazz);
             }
+            // 注意，下一次循环页面已经刷新，需要重新findElement
+            college = driver.findElement(By.id("_ctl1_ddlCollege"));
+            collegeSelector = new Select(college);
         }
     }
 

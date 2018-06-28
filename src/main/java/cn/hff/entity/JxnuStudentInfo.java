@@ -90,7 +90,7 @@ public class JxnuStudentInfo {
     /**
      * 班级
      */
-    @Column(name = "class_name", length = 16)
+    @Column(name = "class_name", length = 24)
     private String className;
 
     /**
