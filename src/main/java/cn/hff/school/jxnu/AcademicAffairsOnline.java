@@ -52,6 +52,7 @@ public class AcademicAffairsOnline {
             HttpResponse response = client.execute(request);
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != HttpStatus.SC_OK) {
+                EntityUtils.consumeQuietly(response.getEntity());
                 return null;
             }
             String html = EntityUtils.toString(response.getEntity());
@@ -117,6 +118,7 @@ public class AcademicAffairsOnline {
             HttpResponse response = client.execute(request);
             int statusCode = response.getStatusLine().getStatusCode();
             if (statusCode != HttpStatus.SC_OK) {
+                EntityUtils.consumeQuietly(response.getEntity());
                 return null;
             }
             String html = EntityUtils.toString(response.getEntity());
