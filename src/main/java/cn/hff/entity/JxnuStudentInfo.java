@@ -100,6 +100,41 @@ public class JxnuStudentInfo {
     private String idCardNum;
 
     /**
+     * 籍贯
+     */
+    @Column(length = 255)
+    private String origin;
+
+    /**
+     * 手机号
+     */
+    @Column(name = "phone_num", length = 11)
+    private String phoneNum;
+
+    /**
+     * 培养层次
+     */
+    @Column(length = 16)
+    private String level;
+
+    /**
+     * 学制
+     */
+    private Integer years;
+
+    /**
+     * 办学类型
+     */
+    @Column(length = 12)
+    private String type;
+
+    /**
+     * 专业
+     */
+    @Column(length = 32)
+    private String major;
+
+    /**
      * 课程成绩
      */
     @Lob

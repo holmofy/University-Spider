@@ -18,7 +18,12 @@ public class JxnuTrackerTest {
 
     @Test
     public void test() {
-        tracker.track();
+        tracker.trackPaySystem();
+    }
+
+    @Test
+    public void distinct() {
+        tracker.distinctStuNum();
     }
 
 }

@@ -1,11 +1,14 @@
 package cn.hff.util;
 
-import net.sourceforge.tess4j.TesseractException;
-import org.junit.Test;
-
-import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
+import org.junit.Test;
+
+import net.sourceforge.tess4j.TesseractException;
 
 /**
  * 卧槽
@@ -16,13 +19,14 @@ public class ImageUtilsTest {
 
     @Test
     public void testReduceInterference() throws IOException, TesseractException, InterruptedException {
-        String text = ImageUtils.recognition(ImageIO.read(new File("C:\\Users\\19383\\Desktop\\CheckCode.jpg")));
+        String text = ImageUtils.recognition(ImageIO.read(new File("C:\\Users\\19383\\Desktop\\output.jpg")));
         System.out.println(text);
     }
 
     @Test
     public void testImageProcess() throws IOException {
-        ImageIO.write(ImageUtils.grayImage(ImageIO.read(new File("C:\\Users\\19383\\Desktop\\verifyCode.jpg"))),
-                "JPEG",new File("C:\\Users\\19383\\Desktop\\output.jpg"));
+        BufferedImage originImage = ImageIO.read(new File("C:\\Users\\19383\\Desktop\\CheckCode.jpg"));
+        BufferedImage processedImage = ImageUtils.binaryImage(ImageUtils.grayImage(ImageUtils.clipImage(originImage)));
+        ImageIO.write(processedImage, "JPEG", new File("C:\\Users\\19383\\Desktop\\output.jpg"));
     }
 }

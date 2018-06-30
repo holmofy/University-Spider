@@ -62,6 +62,8 @@ public class CommonPaySystem<T extends CommonPayStudent> {
 
     private Class<T> clazz;
 
+    private ViewStateParamJoiner joiner;
+
     /**
      * 获取验证码
      * 同时SessionID会由Apache HttpClient cookie自动管理
@@ -80,6 +82,7 @@ public class CommonPaySystem<T extends CommonPayStudent> {
                     return ImageUtils.recognition(new ByteArrayInputStream(bytes));
                 }
             } else {
+                EntityUtils.consumeQuietly(response.getEntity());
                 log.info("请求失败");
             }
         } catch (IOException e) {
@@ -140,6 +143,8 @@ public class CommonPaySystem<T extends CommonPayStudent> {
                 student.setIdCartNum(document.getElementById("Labelsfzh").text().trim());
                 student.setBankCartNum(document.getElementById("yhkh").text().trim());
                 return student;
+            } else {
+                EntityUtils.consumeQuietly(response.getEntity());
             }
         } catch (IOException e) {
             log.warn("网络请求失败", e);
@@ -162,15 +167,9 @@ public class CommonPaySystem<T extends CommonPayStudent> {
             tryCount++;
         }
         log.info("尝试识别验证码" + tryCount + "次");
+
         // 网站用ASP.NET写的，隐藏表单与中的_VIEWSTATE仍需要传回去
-        String params = "__VIEWSTATE=%2FwEPDwULLTE5MTY2NjQxMzQPZBYCZg9kFgQCAQ8WAh4JaW5uZXJodG1sBfQBPGxpPjxhIGNsYXNzPSIiIGhyZWY9ImphdmFzY3JpcHQ6T3BlblB1YignMycpIj7igKLlhbPkuo7nvZHkuIrmlK%2Fku5jml7bpl7TosIPmlbQ8L2E%2BPC9saT48bGk%2BPGEgY2xhc3M9IiIgaHJlZj0iamF2YXNjcmlwdDpPcGVuUHViKCc0JykiPuKAoue8tOi0ueaMh%2BWNlzwvYT48L2xpPjxsaT48YSBjbGFzcz0iIiBocmVmPSJqYXZhc2NyaXB0Ok9wZW5QdWIoJzExJykiPuKAoue9keS4iuaUr%2BS7mOmineW6puivtOaYjjwvYT48L2xpPmQCCw8WAh4HVmlzaWJsZWhkZN1hW9h1jgAKOrAMO6eHdz91lJCgwrUvN5Vz3%2BCUNqCC&__EVENTVALIDATION=%2FwEWBQLEzv6XAgKEwbvHBgKrrsjjCQKcoazCDgKdrZyeBUXbvvCRzmvNcB8PvLXWJnfZnjCaOqfGDeU6VMq8Xrrx" +
-                "&txtAdminName=" +
-                stuNum +
-                "&txtAdminPassword=" +
-                stuNum +
-                "&txtAdminCheckCode=" +
-                checkCode +
-                "&adminLoginButton=%E7%99%BB+%E9%99%86";
+        String params = joiner.join(stuNum, stuNum, checkCode);
         HttpUriRequest request = RequestBuilder.post(url)
                 .setConfig(conf)
                 .addHeader(Headers.USER_AGENT)
@@ -203,5 +202,9 @@ public class CommonPaySystem<T extends CommonPayStudent> {
             log.warn("网络请求失败", e);
         }
         return false;
+    }
+
+    public interface ViewStateParamJoiner {
+        String join(String username, String password, String checkCode);
     }
 }

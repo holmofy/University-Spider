@@ -1,16 +1,26 @@
 package cn.hff.util;
 
-import net.sourceforge.tess4j.ITesseract;
-import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
+import java.awt.color.ColorSpace;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
+import java.awt.image.BufferedImageOp;
+import java.awt.image.ByteLookupTable;
+import java.awt.image.ColorConvertOp;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
+import java.awt.image.LookupOp;
+import java.awt.image.RescaleOp;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 import javax.annotation.Nullable;
 import javax.imageio.ImageIO;
-import java.awt.color.ColorSpace;
-import java.awt.geom.AffineTransform;
-import java.awt.image.*;
-import java.io.IOException;
-import java.io.InputStream;
+
+import net.sourceforge.tess4j.ITesseract;
+import net.sourceforge.tess4j.Tesseract;
+import net.sourceforge.tess4j.TesseractException;
 
 /**
  * 识别验证码
@@ -183,6 +193,7 @@ public class ImageUtils {
      */
     public static String recognition(BufferedImage srcImage) throws TesseractException, IOException {
         BufferedImage reducedImage = binaryImage(grayImage(clipImage(srcImage)));
+        ImageIO.write(reducedImage, "jpg", new File("./tmp/CheckCode.jpg"));
         return TESSERACT.doOCR(reducedImage).trim();
     }
 }

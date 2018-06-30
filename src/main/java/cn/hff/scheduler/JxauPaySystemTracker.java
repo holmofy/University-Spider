@@ -28,7 +28,15 @@ public class JxauPaySystemTracker {
     @Autowired
     private JxauStudentInfoDao studentInfoDao;
 
-    CommonPaySystem<JxauPayStudent> paySystem = new CommonPaySystem<>(Constants.PAY_SYSTEM_SITE, JxauPayStudent.class);
+    CommonPaySystem<JxauPayStudent> paySystem = new CommonPaySystem<>(Constants.PAY_SYSTEM_SITE, JxauPayStudent.class,
+            (username, password, checkCode) -> "__VIEWSTATE=%2FwEPDwULLTE5MTY2NjQxMzQPZBYCZg9kFgQCAQ8WAh4JaW5uZXJodG1sBfQBPGxpPjxhIGNsYXNzPSIiIGhyZWY9ImphdmFzY3JpcHQ6T3BlblB1YignMycpIj7igKLlhbPkuo7nvZHkuIrmlK%2Fku5jml7bpl7TosIPmlbQ8L2E%2BPC9saT48bGk%2BPGEgY2xhc3M9IiIgaHJlZj0iamF2YXNjcmlwdDpPcGVuUHViKCc0JykiPuKAoue8tOi0ueaMh%2BWNlzwvYT48L2xpPjxsaT48YSBjbGFzcz0iIiBocmVmPSJqYXZhc2NyaXB0Ok9wZW5QdWIoJzExJykiPuKAoue9keS4iuaUr%2BS7mOmineW6puivtOaYjjwvYT48L2xpPmQCCw8WAh4HVmlzaWJsZWhkZN1hW9h1jgAKOrAMO6eHdz91lJCgwrUvN5Vz3%2BCUNqCC&__EVENTVALIDATION=%2FwEWBQLEzv6XAgKEwbvHBgKrrsjjCQKcoazCDgKdrZyeBUXbvvCRzmvNcB8PvLXWJnfZnjCaOqfGDeU6VMq8Xrrx" +
+                    "&txtAdminName=" +
+                    username +
+                    "&txtAdminPassword=" +
+                    password +
+                    "&txtAdminCheckCode=" +
+                    checkCode +
+                    "&adminLoginButton=%E7%99%BB+%E9%99%86");
 
     public void track() {
 //        List<JxauStudentInfo> students = studentInfoDao.findByStuNumLike("2016%");

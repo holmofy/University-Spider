@@ -46,7 +46,7 @@ public class AcademicAffairsOnline {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("YYYYMMdd");
 
     public JxnuStudentInfo baseInfo() {
-        String url = baseUrl + "/MyControl/Student_InforCheck.aspx";
+        String url = baseUrl + "/MyControl/TXCJ_InforCheck.aspx";
         HttpUriRequest request = new HttpGet(url);
         try {
             HttpResponse response = client.execute(request);
@@ -59,12 +59,19 @@ public class AcademicAffairsOnline {
             JxnuStudentInfo studentInfo = new JxnuStudentInfo();
             studentInfo.setStuNum(doc.getElementById("lblXH").text().trim());
             studentInfo.setName(doc.getElementById("lblXM").text().trim());
-            studentInfo.setClassName(doc.getElementById("lblBJ").text().trim());
-            studentInfo.setCandidateNum(doc.getElementById("lblKSH").text().trim());
             studentInfo.setGender(Gender.fromText(doc.getElementById("lblXB").text().trim()));
             studentInfo.setEthnic(doc.getElementById("lblMZ").text().trim());
             studentInfo.setBirthday(DateUtils.parseDate(doc.getElementById("lblCSRQ").text().trim(), formatter));
             studentInfo.setIdCardNum(doc.getElementById("lblSFZH").text().trim());
+            studentInfo.setOrigin(doc.getElementById("txtJG").val().trim());
+            studentInfo.setPhoneNum(doc.getElementById("txtSJH").val().trim());
+            studentInfo.setCandidateNum(doc.getElementById("lblKSH").text().trim());
+            studentInfo.setLevel(doc.getElementById("lblPYCC").text().trim());
+            studentInfo.setYears(NumberUtils.safeParseInteger(doc.getElementById("lblXZ").text().trim()));
+            studentInfo.setType(doc.getElementById("lblBXLX").text().trim());
+            studentInfo.setDepartment(doc.getElementById("lblXYMC").text().trim());
+            studentInfo.setMajor(doc.getElementById("lblZYMC").text().trim());
+            studentInfo.setClassName(doc.getElementById("lblBJMC").text().trim());
             return studentInfo;
         } catch (IOException e) {
             log.warn("网络请求失败：" + url);
