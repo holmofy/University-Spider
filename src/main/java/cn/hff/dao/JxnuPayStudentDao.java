@@ -10,4 +10,7 @@ import cn.hff.entity.JxnuPayStudent;
  * Created by Holmofy on 2018/6/27.
  */
 public interface JxnuPayStudentDao extends JpaRepository<JxnuPayStudent, Integer> {
+
+    int countByStuNumber(String stuNum);
+
 }

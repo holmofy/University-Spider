@@ -134,6 +134,7 @@ public class JxnuTracker {
         List<JxnuStudentInfo> list2 = jxnuStudentInfoDao.findByStuNumStartingWith("2014");
         Stream.concat(list1.stream().map(JxnuStudentInfo::getStuNum),
                 list2.stream().map(JxnuStudentInfo::getStuNum).map(stuNum -> stuNum.substring(2)))
+                .filter((stuNum -> jxnuPayStudentDao.countByStuNumber(stuNum) <= 0))
                 .map(system::getStudentInfo)
                 .filter(Objects::nonNull)
                 .peek((studentInfo) -> log.info("信息保存成功，学号：" + studentInfo.getStuNumber()))
